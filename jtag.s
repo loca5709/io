@@ -40,6 +40,32 @@ wait_echo:
 	blt r16, r22, read_char
 	movi r23,0x39
 	blt r23, r 16, read_char
+
+	addi r16, r16, -48
+    movi r24, 10
+    mul r19, r19, r24
+    add r19, r19, r16
+    br read_char
+	
+	finish_number:
+	add r18, r18, r19
+	movia r15, STR_TOTAL
+	addi r15, r15, 1
+	beq r16, r0, print_total_num
+	
+	write_total:
+	divu r29, r25, r26
+	mul r30, r29, r26
+	sub r16, r25, r30
+    addi r16, r16, 48
+    stb r16, 0(r27)
+    addi r27, r27, 1
+    addi r28, r28, 1
+    mov r25, r29
+    bne r25, r0, make_digits
+
+    addi r27, r27, -1
+	
 done:
 	break
 
