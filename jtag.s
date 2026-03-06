@@ -65,6 +65,49 @@ wait_echo:
     bne r25, r0, make_digits
 
     addi r27, r27, -1
+
+	print_digits:
+	ldb r16, 0(r27)
+
+	wait_digit:
+	ldwio r17, 4(r2)
+	srli r17, r17, 16
+	beq r17, r0, wait_digit
+
+	stwio r16, 0(r2)
+	addi r27, r27, -1
+	addi r28, r28, -1
+	bne r28, r0, print_digits
+	br print_endline
+
+	print_zero:
+	movi r16, 0x30
+
+	wait_zero:
+	ldwio r17, 4(r2)
+	srli r17, r17, 16
+	beq r17, r0, wait_zero
+
+	stwio r16 0(r2)
+
+	print_endline:
+	movi r16, 0x0A
+
+	wait_nl2:
+	ldwio r17, 4(r2)
+	srli r17, r17, 16
+	beq r17, r0, wait_nl2
+
+	stwio r16, 0(r2)
+
+	movia r15, STR_PROMPT
+	br write_str
+
+	.data
+	STR_PROMPT: .string "Enter number:"
+	STR_TOTAL: .string "Total:"
+	DIGITS: .skip 16
+	
 	
 done:
 	break
