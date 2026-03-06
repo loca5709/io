@@ -4,7 +4,7 @@ _start:
 	# Example code to print the "Enter number:" prompt
 	movia	r2, 0xff201000		# JTAG UART MMIO base address
     movia   r15, STR_PROMPT		# address of "Enter number:" string
-
+	movi r18, 0
 write_str:
     ldb     r16, 0(r15)			# r16 = read next character from STR_PROMPT
     addi    r15, r15, 1			# advance pointer in STR_PROMPT
